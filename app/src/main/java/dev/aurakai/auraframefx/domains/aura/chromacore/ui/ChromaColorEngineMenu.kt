@@ -18,6 +18,17 @@ import androidx.lifecycle.ViewModelStoreOwner
  * 🛰️ CHROMA COLOR ENGINE MENU (Level 3)
  * Unified interface for Color Engine tweaks (from ColorBlendr).
  */
+/**
+ * Provides a settings UI for the color engine and a back navigation action.
+ *
+ * Displays a scaffolded screen titled "Color Engine" containing switches to toggle
+ * dynamic colors, a custom seed color, and per-app colors. UI state is driven by
+ * the provided ViewModel's settings and updates reactively.
+ *
+ * @param onNavigateBack Callback invoked when the top-bar back button is pressed.
+ * @param viewModel ViewModel that exposes color engine settings. By default this is
+ * obtained via Hilt from the current LocalViewModelStoreOwner; a missing
+ * ViewModelStoreOwner will cause an explicit error.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChromaColorEngineMenu(

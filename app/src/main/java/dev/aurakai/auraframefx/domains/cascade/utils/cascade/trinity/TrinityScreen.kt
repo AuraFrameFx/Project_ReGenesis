@@ -52,6 +52,17 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Renders the main Trinity System screen and updates the UI based on the provided ViewModel state.
+ *
+ * Observes the viewModel's `uiState` and displays the corresponding UI:
+ * - Loading: centered progress indicator.
+ * - Error: surfaces the error via a snackbar with a "Retry" action that triggers `viewModel.refresh()`.
+ * - Processing: centered progress indicator with a status message.
+ * - Success: a scrollable list showing user info, agent statuses, available themes (selectable), and the last agent response.
+ *
+ * The top app bar includes a Refresh action that calls `viewModel.refresh()`.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrinityScreen(
@@ -360,4 +371,3 @@ private fun EmptyContent(message: String, onRetry: () -> Unit) {
         }
     }
 }
-

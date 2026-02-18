@@ -14,6 +14,18 @@ import dev.aurakai.auraframefx.domains.cascade.utils.debug
  * - Shows paywall when trial expires
  * - Manages feature access throughout app
  */
+/**
+ * Wraps app UI with subscription enforcement and paywall presentation.
+ *
+ * Refreshes subscription status on first composition, always renders `content`, and overlays
+ * a `PaywallDialog` when the current subscription is `SubscriptionState.Free` and the
+ * paywall feature toggle is enabled.
+ *
+ * @param viewModel The `SubscriptionViewModel` used to observe and control subscription state.
+ *                  By default this is obtained via Hilt using the current `LocalViewModelStoreOwner`;
+ *                  composition will fail with a clear message if no `ViewModelStoreOwner` is provided.
+ * @param content Composable content to render inside the billing wrapper.
+ */
 @Composable
 fun BillingWrapper(
     viewModel: SubscriptionViewModel = hiltViewModel(

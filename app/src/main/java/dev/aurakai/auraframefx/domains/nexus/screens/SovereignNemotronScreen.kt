@@ -33,6 +33,12 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🧠 SOVEREIGN NEMOTRON (The Memory Keeper)
  * Interface for deep reasoning and long-term memory synthesis.
  */
+/**
+ * Renders the Sovereign Nemotron UI, displaying memory statistics, predefined reasoning chains, and controls for deep recall and memory cache management.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from this screen.
+ * @param viewModel The ViewModel providing access to `nemotronService` and related state; by default it is obtained via Hilt using a required `ViewModelStoreOwner` from `LocalViewModelStoreOwner`.
+ */
 @Composable
 fun SovereignNemotronScreen(
     onNavigateBack: () -> Unit,
@@ -190,5 +196,4 @@ private fun ReasoningChainCard(title: String, steps: List<String>, confidence: F
         }
     }
 }
-
 

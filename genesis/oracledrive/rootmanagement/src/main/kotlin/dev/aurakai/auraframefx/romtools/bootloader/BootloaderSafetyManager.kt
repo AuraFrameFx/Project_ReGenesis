@@ -12,9 +12,37 @@ import javax.inject.Singleton
 interface BootloaderSafetyManager {
     val safetyStatus: StateFlow<BootloaderSafetyStatus>
 
-    suspend fun performPreFlightChecks(operation: BootloaderOperation): SafetyCheckResult
-    suspend fun monitorOperationState(): StateMonitoringResult
-    suspend fun createSafetyCheckpoint(): String
+    /**
+ * Runs a sequence of device safety checks relevant to the given bootloader operation and produces a consolidated result.
+ *
+ * Performs compatibility, battery, storage, OEM unlock, boot verification, active process, backup, and SELinux checks as applicable for the operation, aggregates warnings and critical issues, and updates the manager's observable safety status.
+ *
+ * @param operation The bootloader operation to validate (influences thresholds and which checks are performed).
+ * @return A SafetyCheckResult containing whether checks passed, collected warnings, critical issues, and whether the operation may proceed despite warnings.
+ */
+suspend fun performPreFlightChecks(operation: BootloaderOperation): SafetyCheckResult
+    /**
+ * Assess current system health metrics relevant to bootloader operations.
+ *
+ * Performs a snapshot evaluation of system responsiveness, partition health, boot environment stability,
+ * and recent kernel panic detection to inform whether it is safe to proceed with bootloader-related actions.
+ *
+ * @return A [StateMonitoringResult] containing:
+ *   - `systemResponsive`: `true` if the device appears responsive, `false` otherwise.
+ *   - `partitionsHealthy`: `true` if mounted partitions show no obvious errors, `false` otherwise.
+ *   - `bootEnvironmentStable`: `true` if the boot environment reports readiness, `false` otherwise.
+ *   - `kernelPanicDetected`: `true` if evidence of a recent kernel panic is present, `false` otherwise.
+ */
+suspend fun monitorOperationState(): StateMonitoringResult
+    /**
+ * Generates a timestamp-based safety checkpoint and attempts to create its filesystem path.
+ *
+ * Attempts to create a checkpoint directory (used to mark a pre-operation restore point) and returns
+ * the identifier created from the current time.
+ *
+ * @return The checkpoint identifier (timestamp-based string).
+ */
+suspend fun createSafetyCheckpoint(): String
     suspend fun validatePostOperationState(operation: BootloaderOperation): ValidationResult
 }
 
@@ -333,6 +361,14 @@ class BootloaderSafetyManagerImpl @Inject constructor(
         return bootable != "0"
     }
 
+    /**
+     * Detects presence of recent kernel panic artifacts on the device.
+     *
+     * Checks common kernel panic artifact locations (*/proc/last_kmsg* and */sys/fs/pstore*) and
+     * reports whether any panic traces are present.
+     *
+     * @return `true` if kernel panic traces are found in either location, `false` otherwise.
+     */
     private fun checkKernelPanic(): Boolean {
         return try {
             val lastKmsg = java.io.File("/proc/last_kmsg")
@@ -420,5 +456,4 @@ enum class SELinuxMode {
     PERMISSIVE,
     UNKNOWN
 }
-
 

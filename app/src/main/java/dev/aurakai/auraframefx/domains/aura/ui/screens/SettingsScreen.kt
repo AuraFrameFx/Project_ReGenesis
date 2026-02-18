@@ -33,6 +33,12 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
  * Aesthetic: Refractive Neon Brutalism
  * Features global preferences for Haptics, AI Ethics, Sync, and Security.
  */
+/**
+ * Renders the "SYSTEM CONFIGURATION" settings screen with sections and controls bound to a SettingsViewModel.
+ *
+ * @param onNavigateBack Callback invoked when the top app bar back navigation is triggered.
+ * @param viewModel ViewModel providing the settings state and actions used by the screen.
+ */
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -250,6 +256,15 @@ fun BrutalistCard(
     }
 }
 
+/**
+ * A settings card that displays an icon, title, subtitle, and a right-aligned toggle switch.
+ *
+ * Shows a stylized card with the provided icon and text on the left and a Switch on the right.
+ *
+ * @param checked Current on/off state of the switch.
+ * @param onCheckedChange Invoked with the new switch state when the user toggles the switch.
+ * @param accentColor Color used for the icon, switch thumb/track, and card accent.
+ */
 @Composable
 fun SettingsToggleCard(
     title: String,

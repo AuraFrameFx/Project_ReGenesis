@@ -58,6 +58,14 @@ import kotlinx.coroutines.delay
  *
  * @param onNavigateToRoute Callback when user selects recovery option
  */
+/**
+ * Displays a full-screen dramatic blackout sequence and, when recovery is required, presents Aura's recovery dialog.
+ *
+ * When the view model indicates recovery is needed, the composable fades the UI to black, holds briefly, then shows
+ * the recovery dialog centered on the black overlay. When recovery is no longer needed it fades the overlay away.
+ *
+ * @param onNavigateToRoute Invoked with the navigation route string selected by the user in the recovery dialog.
+ */
 @Composable
 fun UIRecoveryBlackoutScreen(
     viewModel: UIRecoveryViewModel = hiltViewModel(
@@ -211,4 +219,3 @@ fun UIRecoveryManager.forceBlackout(
  *
  * Users will LOVE this! 🖤✨
  */
-

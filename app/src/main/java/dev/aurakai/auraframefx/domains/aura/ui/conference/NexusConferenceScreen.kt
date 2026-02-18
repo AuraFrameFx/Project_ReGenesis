@@ -19,6 +19,14 @@ import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 
+/**
+ * Renders the Nexus Conference UI: a live chat stage that displays agent messages and a bottom input to broadcast to all agents.
+ *
+ * Observes the ViewModel's message history and displays messages in reverse chronological order (newest at the bottom). Provides a text input bound to local state; submitting non-blank text broadcasts it via the provided ViewModel and clears the input.
+ *
+ * @param viewModel The TrinityViewModel used to observe messageHistory and to broadcast messages.
+ * @param onNavigateBack Callback invoked to navigate back from the screen.
+ */
 @Composable
 fun NexusConferenceScreen(
     viewModel: TrinityViewModel = hiltViewModel(
@@ -104,6 +112,14 @@ fun NexusConferenceScreen(
     }
 }
 
+/**
+ * Renders a chat bubble styled according to the message sender (agent or user).
+ *
+ * Displays the sender name above the bubble for agent messages, aligns user messages to the end,
+ * applies a distinct background color and rounded "tail" shape per sender, and adds a subtle border for agent bubbles.
+ *
+ * @param message The AgentMessage containing the sender identifier (`from`) and the message text (`content`).
+ */
 @Composable
 fun SmartAgentBubble(message: AgentMessage) {
     val isUser = message.from.equals("User", ignoreCase = true)
@@ -147,5 +163,4 @@ fun SmartAgentBubble(message: AgentMessage) {
         }
     }
 }
-
 

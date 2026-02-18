@@ -30,6 +30,14 @@ import dev.aurakai.auraframefx.domains.aura.UIDesign
  * 🎨 COLLAB CANVAS SCREEN
  * Where user and Aura design components together.
  */
+/**
+ * Renders the collaborative canvas screen with an active projects header, import/new actions, and a list of project items.
+ *
+ * The screen observes `viewModel.designs` and provides UI controls for importing designs, creating a new design, exporting, and broadcasting per-item actions.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from this screen.
+ * @param viewModel View model supplying the list of designs and related actions. By default this is obtained via Hilt (`hiltViewModel`) and will throw a descriptive error if no `LocalViewModelStoreOwner` is provided.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollabCanvasScreen(
@@ -148,4 +156,3 @@ private fun DesignCanvasItem(
         }
     }
 }
-

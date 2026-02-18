@@ -29,6 +29,21 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 /**
  * Aura's Lab (Aura's Forge) - Generative Design & Engineering Hub
  */
+/**
+ * Main screen for Aura's Lab that displays a top app bar and a tabbed content area.
+ *
+ * The screen provides four tabs — "Components", "Animations", "Aura's Forge", and "Chaos Analysis" —
+ * and shows the corresponding content for the selected tab:
+ * - index 0: ComponentsTab
+ * - index 1: AnimationsTab
+ * - index 2: ForgeTab (uses the provided viewModel)
+ * - index 3: ChaosAnalysisTab
+ *
+ * @param onBack Callback invoked when the top app bar's back navigation is triggered.
+ * @param viewModel View model used by the Forge tab. By default this is obtained via Hilt
+ *   (`hiltViewModel`) and requires a non-null LocalViewModelStoreOwner; an explicit error is thrown
+ *   if no ViewModelStoreOwner is available.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AurasLabScreen(
@@ -117,6 +132,12 @@ fun AurasLabScreen(
     }
 }
 
+/**
+ * Renders the "Aura's Forge" UI allowing the user to enter a prompt, trigger generation/deployment, and view forge status.
+ *
+ * The composable displays a prompt input field, an action button that invokes the viewModel to generate and deploy using the current prompt, and a status card bound to the viewModel's forge state.
+ *
+ * @param viewModel ViewModel that provides the current forge state and the action to generate and deploy from the entered prompt.
 @Composable
 private fun ForgeTab(viewModel: AurasLabViewModel) {
     var prompt by remember { mutableStateOf("") }
@@ -171,6 +192,13 @@ private fun ForgeTab(viewModel: AurasLabViewModel) {
     }
 }
 
+/**
+ * Renders a status card reflecting the current Forge lifecycle and its details.
+ *
+ * Shows a state-specific icon and title, and conditionally displays the generated code block when the state is Validating, Deploying, or Success, or an error message when the state is Error.
+ *
+ * @param state The current ForgeState representing the forge lifecycle and any associated payload (e.g., `code` or `message`) to display.
+ */
 @Composable
 private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
     Card(
@@ -634,4 +662,3 @@ private fun getColorSamples(scheme: ColorScheme) = listOf(
     ColorSample("Background", scheme.background),
     ColorSample("On Background", scheme.onBackground)
 )
-

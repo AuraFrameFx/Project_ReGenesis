@@ -36,6 +36,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
  * Part of the Nexus domain. Interface for selecting and managing the active
  * "party" of AI agents that will collaborate on complex system tasks.
  */
+/**
+ * Displays the "Digital Council" screen for selecting and managing the active party of agents.
+ *
+ * The screen shows a synergy meter, a scrollable list of agent cards (excluding the SYSTEM agent),
+ * and a full-width deploy button. Tapping an agent card toggles its membership in the active party;
+ * the top app bar back icon triggers navigation via the provided callback.
+ *
+ * @param onNavigateBack Callback invoked when the top-bar back icon is pressed.
+ * @param viewModel ViewModel that provides `selectedAgents` and `synergyLevel` state and handles agent selection. 
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PartyScreen(
@@ -140,6 +150,16 @@ fun SynergyMeter(level: Float) {
     }
 }
 
+/**
+ * Displays a selectable card for an agent, showing its avatar initial, name, role, and selection state.
+ *
+ * The card updates its border, background tint, and trailing icon based on selection and invokes the provided
+ * callback when tapped.
+ *
+ * @param agent The AgentType to render.
+ * @param isSelected Whether the agent is currently selected; controls visual emphasis.
+ * @param onClick Callback invoked when the card is tapped.
+ */
 @Composable
 fun AgentPartyCard(
     agent: AgentType,
@@ -199,4 +219,3 @@ fun agentRole(agent: AgentType): String = when(agent) {
     AgentType.CASCADE -> "Data Streamer"
     else -> "Generic Unit"
 }
-

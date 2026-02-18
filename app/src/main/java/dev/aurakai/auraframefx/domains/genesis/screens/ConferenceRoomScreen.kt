@@ -76,8 +76,17 @@ private val DarkBackground = Color(0xFF050508)
 private val SurfaceGlass = Color(0xFF121216)
 
 /**
- * 🧠 NEXUS CONFERENCE ROOM
- * Multi-Agent collaboration space with Gemini-style visuals.
+ * Hosts the Nexus multi-agent conference UI including agent stage, unified chat stream, and input bar.
+ *
+ * The composable observes conference state from the provided ViewModel and wires the input bar to
+ * recording and message-broadcasting actions. It also auto-scrolls the chat list to the latest message.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from the screen.
+ * @param onNavigateToChat Callback invoked to navigate to the chat list or detailed chat view.
+ * @param onNavigateToAgents Callback invoked to navigate to the agents management/view screen.
+ * @param viewModel ConferenceRoomViewModel used to supply messages, recording/transcription state,
+ *        and to perform actions; by default this is obtained via `hiltViewModel(...)` and requires
+ *        a non-null `LocalViewModelStoreOwner`.
  */
 @Composable
 fun ConferenceRoomScreen(
@@ -443,4 +452,3 @@ fun UnisonInputBar(
         }
     }
 }
-

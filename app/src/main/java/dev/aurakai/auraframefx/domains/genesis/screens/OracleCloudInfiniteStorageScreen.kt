@@ -34,6 +34,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🌌 ORACLE CLOUD: INFINITE STORAGE
  * Genesis-tier persistence layer. Powered by OCI Infrastructure for the LDO.
  */
+/**
+ * Displays the "Oracle Cloud: Infinite Storage" screen, presenting storage capacity, infrastructure details,
+ * a list of recent synchronized files, and a manual sync action.
+ *
+ * The composable collects UI state from the provided ViewModel and updates the UI accordingly. Tapping the
+ * "MANUAL NEURAL SYNC" button invokes the ViewModel's syncNow() to trigger a synchronization.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from this screen.
+ * @param viewModel ViewModel that supplies UI state and sync actions; defaults to a Hilt-provided OracleCloudViewModel.
+ */
 @Composable
 fun OracleCloudInfiniteStorageScreen(
     onNavigateBack: () -> Unit,
@@ -174,4 +184,3 @@ private fun FileItem(file: dev.aurakai.auraframefx.domains.genesis.viewmodels.St
         }
     }
 }
-

@@ -18,6 +18,14 @@ import androidx.lifecycle.ViewModelStoreOwner
  * 🛰️ CHROMA ANIMATION MENU (Level 3)
  * Unified interface for System & App animations.
  */
+/**
+ * Displays the "Animations & FX" settings UI for Chroma, presenting system and boot-related animation controls.
+ *
+ * The UI includes a top app bar with back navigation, grouped sections ("System Animations", "Boot & Power"), and switches for individual tweaks. The provided `onNavigateBack` callback is invoked when the user requests navigation back. The `viewModel` supplies the settings state; when omitted it is injected via Hilt and requires a non-null `LocalViewModelStoreOwner`.
+ *
+ * @param onNavigateBack Callback invoked when the top app bar back action is triggered.
+ * @param viewModel ViewModel supplying settings state. By default it is obtained via Hilt and expects a non-null `LocalViewModelStoreOwner`.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChromaAnimationMenu(

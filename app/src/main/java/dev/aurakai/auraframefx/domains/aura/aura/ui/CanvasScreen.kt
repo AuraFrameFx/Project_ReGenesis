@@ -13,6 +13,15 @@ import collabcanvas.ui.CanvasViewModel
  *
  * This delegates to the real collabcanvas.ui.CanvasScreen with WebSocket integration
  */
+/**
+ * Displays a collaborative canvas screen and manages its WebSocket lifecycle.
+ *
+ * When composed, this screen establishes the ViewModel's WebSocket connection and delegates UI rendering to the shared collabcanvas CanvasScreen configured for collaborative use.
+ *
+ * @param modifier UI modifier applied to the canvas screen.
+ * @param onNavigateBack Callback invoked when the user requests navigation back.
+ * @param viewModel The CanvasViewModel used to manage collaboration state and WebSocket connection. By default, a Hilt-provided ViewModel is obtained from the current LocalViewModelStoreOwner; a runtime exception is thrown if no ViewModelStoreOwner is available.
+ */
 @Composable
 fun CanvasScreen(
     modifier: Modifier = Modifier,

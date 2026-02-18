@@ -79,6 +79,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentEditor
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentType
@@ -106,6 +107,18 @@ import kotlin.math.sin
  * Tilt your phone to rotate the 3D preview!
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Main screen for 3D gyroscope-based UI customization that combines a live 3D phone preview,
+ * component layer management, an editor, AI prompt input, and voice control.
+ *
+ * The composable starts the device gyroscope when composed and stops the gyroscope and any
+ * ongoing voice listening when disposed. It observes ViewModel state for rotation angles,
+ * customization data, components, selected component, AI responses, and voice state, and
+ * forwards user interactions (component selection, editor updates, AI prompt submission,
+ * voice commands) to the ViewModel.
+ *
+ * @param onNavigateBack Callback invoked when the user requests navigation back (top app bar back action).
+ */
 @Composable
 fun GyroscopeCustomizationScreen(
     onNavigateBack: () -> Unit = {}
@@ -113,7 +126,10 @@ fun GyroscopeCustomizationScreen(
     // Provide an explicit type to help the compiler resolve injected ViewModel members unambiguously
 
 
-    val viewModel: CustomizationViewModel = hiltViewModel()
+    val viewModel: CustomizationViewModel =
+        hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
+                    "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+                }, null)
     val customizationState by viewModel.customizationState.collectAsState()
     val rotationAngles by viewModel.rotationAngles.collectAsState()
     val aiResponse by viewModel.aiResponse.collectAsState()
@@ -937,5 +953,4 @@ fun VoiceStatusCard(
         }
     }
 }
-
 

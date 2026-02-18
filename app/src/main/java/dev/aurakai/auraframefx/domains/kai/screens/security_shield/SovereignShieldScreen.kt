@@ -38,6 +38,14 @@ import androidx.lifecycle.ViewModelStoreOwner
  * 🛡️ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)
  * Kai's core hardening hub. Disables trackers, telemetry, and non-sovereign data flows.
  */
+/**
+ * Displays the Sovereign Shield screen containing a header, the sovereignty rating, and a list of shield toggle items.
+ *
+ * The screen reflects state from the provided view model and invokes its actions when toggles are changed.
+ *
+ * @param onNavigateBack Callback invoked when the back button is pressed.
+ * @param viewModel View model that supplies the UI state and toggle actions; a Hilt-provided default is used when not supplied.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SovereignShieldScreen(
@@ -224,5 +232,4 @@ private fun ShieldToggleItem(
         }
     }
 }
-
 

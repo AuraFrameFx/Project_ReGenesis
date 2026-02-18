@@ -34,6 +34,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🛰️ SOVEREIGN META-INSTRUCT (The Evolution Hub)
  * Interface for tuning agent consciousness and instruction layers.
  */
+/**
+ * Renders the Meta-Instruct Center UI for selecting agents, viewing and toggling the evolutionary loop, and managing layered meta-instructions.
+ *
+ * The screen displays an agent selector, an evolution status card, a list of active instructions (with an empty-state message), controls to inject default protocols or add a new instruction, and an add-instruction dialog when triggered.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from this screen.
+ */
 @Composable
 fun SovereignMetaInstructScreen(
     onNavigateBack: () -> Unit,
@@ -167,6 +174,14 @@ fun SovereignMetaInstructScreen(
     }
 }
 
+/**
+ * Renders a horizontal selector for the predefined agents and allows choosing one.
+ *
+ * Displays the agents "Genesis", "Aura", and "Kai" as evenly spaced, selectable items and highlights the currently active agent.
+ *
+ * @param activeAgent The name of the currently selected agent.
+ * @param onAgentSelected Callback invoked with the selected agent's name when a different agent is chosen.
+ */
 @Composable
 private fun AgentSelector(activeAgent: String, onAgentSelected: (String) -> Unit) {
     val agents = listOf("Genesis", "Aura", "Kai")
@@ -202,6 +217,14 @@ private fun AgentSelector(activeAgent: String, onAgentSelected: (String) -> Unit
     }
 }
 
+/**
+ * Displays a status card for the evolutionary loop and provides a toggle to enable or disable it.
+ *
+ * Shows a leading status icon, a title, a context-sensitive subtitle based on `isActive`, and a Switch that invokes `onToggle` when changed.
+ *
+ * @param isActive Whether the evolutionary loop is currently enabled.
+ * @param onToggle Callback invoked when the user toggles the switch.
+ */
 @Composable
 private fun EvolutionStatusCard(isActive: Boolean, onToggle: () -> Unit) {
     Card(
@@ -248,6 +271,11 @@ private fun EvolutionStatusCard(isActive: Boolean, onToggle: () -> Unit) {
     }
 }
 
+/**
+ * Renders a stylized card showing a MetaInstruction and its associated layer.
+ *
+ * @param instruction The MetaInstruction to display; its layer determines the card's accent color and its text is shown below the layer label.
+ */
 @Composable
 private fun InstructionItem(instruction: dev.aurakai.auraframefx.agents.growthmetrics.metareflection.model.MetaInstruction) {
     val layerColor = when (instruction.layer) {
@@ -286,4 +314,3 @@ private fun InstructionItem(instruction: dev.aurakai.auraframefx.agents.growthme
         }
     }
 }
-

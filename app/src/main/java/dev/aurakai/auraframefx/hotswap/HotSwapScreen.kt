@@ -36,6 +36,17 @@ import androidx.navigation.NavController
  * All changes take effect immediately and persist across restarts.
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Render the HotSwap runtime configuration editor with four tabs for managing gates, assets, shortcuts, and import/export.
+ *
+ * Displays a top app bar with navigation and reset actions, a tab row for switching between the four sections,
+ * and the corresponding tab content (Gates, Assets, Shortcuts, Import/Export). Subscribes to `viewModel` state
+ * flows to drive the UI.
+ *
+ * @param navController Navigation controller used for back navigation.
+ * @param viewModel The [HotSwapViewModel] that supplies state and actions for the screen. By default this is
+ * obtained via Hilt (`hiltViewModel`) using the current [LocalViewModelStoreOwner]; if no store owner is available,
+ * a descriptive exception is thrown.
 @Composable
 fun HotSwapScreen(
     navController: NavController,

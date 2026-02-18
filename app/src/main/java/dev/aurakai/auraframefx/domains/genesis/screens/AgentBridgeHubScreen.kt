@@ -32,6 +32,19 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🤝 AGENT BRIDGE HUB (The Two Hands)
  * Manages the MCP Connectors and the Sovereign Handshake.
  */
+/**
+ * Displays the Agent Bridge hub UI for viewing MCP connectors and managing their connection state.
+ *
+ * The screen observes connector state from the provided view model, renders connector items,
+ * and delegates user toggles to the view model to enable or disable connectors.
+ *
+ * @param onNavigateBack Callback invoked to navigate back from this screen.
+ * @param viewModel The [SovereignBridgeViewModel] providing connector state and actions.
+ *   By default this is obtained via `hiltViewModel` using `LocalViewModelStoreOwner.current`;
+ *   if no `ViewModelStoreOwner` is present, an exception is thrown.
+ * @throws IllegalStateException If the default `viewModel` initialization is used but
+ *   `LocalViewModelStoreOwner.current` is null (message: "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner").
+ */
 @Composable
 fun AgentBridgeHubScreen(
     onNavigateBack: () -> Unit,
@@ -190,4 +203,3 @@ private fun getIconForCategory(category: String): ImageVector {
         else -> Icons.Default.Hub
     }
 }
-

@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 // Core Imports (kept from your list for screen definitions)
 import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
@@ -254,6 +254,14 @@ sealed class ReGenesisNavHost(val route: String) {
 }
 
 
+/**
+ * Hosts the app's navigation graph and registers every ReGenesis route to its corresponding screen.
+ *
+ * Initializes customization state on first composition and creates a NavHost whose start destination is the HomeGateCarousel.
+ *
+ * @param navController Controller used to navigate between registered composable routes.
+ * @param customizationViewModel ViewModel responsible for customization state; used to initialize customization data on composition (default provided via viewModel()).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavHost(

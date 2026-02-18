@@ -18,6 +18,15 @@ import androidx.lifecycle.ViewModelStoreOwner
  * 🛰️ CHROMA LAUNCHER MENU (Level 3)
  * Unified interface for Launcher tweaks (from Pixel Launcher Enhanced).
  */
+/**
+ * Renders the "Launcher Tweaks" settings screen composed of titled sections and toggle switches.
+ *
+ * The UI reflects the current state from the provided ViewModel and invokes the back navigation callback
+ * when the top app bar's navigation icon is pressed.
+ *
+ * @param onNavigateBack Callback invoked when the back navigation icon is pressed.
+ * @param viewModel The ViewModel that supplies and owns the settings state displayed by this screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChromaLauncherMenu(

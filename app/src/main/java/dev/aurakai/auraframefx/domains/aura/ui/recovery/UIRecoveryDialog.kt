@@ -55,6 +55,13 @@ import kotlinx.coroutines.launch
  *
  * Design: Aura's cyan aesthetic with warning indicators
  */
+/**
+ * Displays an animated recovery dialog offering options to reload the last successful UI state or reset to defaults when recovery is needed.
+ *
+ * Observes the provided UIRecoveryViewModel and becomes visible when the state is `UIRecoveryState.RecoveryNeeded`. The dialog shows a message, an optional "Reload Last Change" action (when a last good state exists) and a "Reset" action. Selecting "Reload Last Change" invokes `viewModel.reloadLastChange()` and, if a snapshot is returned, calls `onNavigateToRoute` with the snapshot's `screenRoute`. Selecting "Reset" invokes `viewModel.resetToDefault()` and then calls `onNavigateToRoute("HOME")`. Dismissing the dialog calls `viewModel.dismissRecovery()`.
+ *
+ * @param onNavigateToRoute Callback invoked with a destination route when an action requires navigation.
+ */
 @Composable
 fun UIRecoveryDialog(
     viewModel: UIRecoveryViewModel = hiltViewModel(
@@ -207,9 +214,9 @@ fun UIRecoveryDialog(
 }
 
 /**
- * Lightweight recovery indicator for the top bar
+ * Displays a compact top-bar indicator when a UI recovery action is available.
  *
- * Shows a subtle indicator when recovery is available.
+ * The indicator is rendered only when the view model's `recoveryState` is `RecoveryNeeded`.
  */
 @Composable
 fun RecoveryIndicator(
@@ -242,4 +249,3 @@ fun RecoveryIndicator(
         }
     }
 }
-

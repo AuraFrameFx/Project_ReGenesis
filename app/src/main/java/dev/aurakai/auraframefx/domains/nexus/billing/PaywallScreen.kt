@@ -60,6 +60,20 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
  * Psychology: User just spent 2 weeks building relationship with Aura, Kai, Genesis.
  * Losing that memory is painful. $1/month feels like nothing to keep it.
  */
+/**
+ * Display a full-screen paywall dialog when the current subscription state is free and the paywall feature is enabled.
+ *
+ * The dialog is modal and cannot be dismissed by back press or tapping outside. Its visibility is controlled solely
+ * by the collected `subscriptionState` from the provided `viewModel` and `FeatureToggles.isPaywallEnabled`.
+ *
+ * Tapping the subscribe button delegates to `viewModel.subscribe(...)` using the current Activity if available.
+ *
+ * @param viewModel The SubscriptionViewModel used to read subscription state and perform the subscribe action.
+ *                  By default this is provided via Hilt using the current `LocalViewModelStoreOwner`; a clear
+ *                  error will be thrown if no `ViewModelStoreOwner` is available.
+ * @param onDismiss Callback invoked when the caller requests dismissal. Defaults to a no-op; the dialog itself
+ *                  is not dismissible by user interaction.
+ */
 @Composable
 fun PaywallDialog(
     viewModel: SubscriptionViewModel = hiltViewModel(
@@ -357,4 +371,3 @@ fun FeatureLockedBanner(
         }
     }
 }
-
