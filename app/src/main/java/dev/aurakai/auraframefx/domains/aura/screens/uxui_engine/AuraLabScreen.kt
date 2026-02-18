@@ -58,6 +58,18 @@ import androidx.lifecycle.ViewModelStoreOwner
  * Aura's Lab Screen (Sandbox Environment)
  * Safe experimentation zone for UI/UX and system mods
  */
+/**
+ * Composable screen presenting Aura's Lab sandbox manager UI.
+ *
+ * Displays a header, system status card, action buttons for creating or importing sandboxes,
+ * and a scrollable list of active sandboxes. Shows modal dialogs for creating and importing
+ * sandboxes and delegates user actions (create/import) to the provided viewModel.
+ *
+ * @param onNavigateBack Callback invoked when the user requests back navigation; default is a no-op.
+ * @param viewModel View model that supplies sandbox state and handles create/import actions.
+ * By default the viewModel is obtained via Hilt using the current LocalViewModelStoreOwner;
+ * composition will throw an exception if no ViewModelStoreOwner is available.
+ */
 @Composable
 fun AuraLabScreen(
     onNavigateBack: () -> Unit = {},
@@ -439,4 +451,3 @@ fun ImportSandboxDialog(
         containerColor = Color(0xFF1A0A14)
     )
 }
-

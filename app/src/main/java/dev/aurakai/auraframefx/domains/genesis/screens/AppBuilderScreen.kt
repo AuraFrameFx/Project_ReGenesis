@@ -37,6 +37,16 @@ import dev.aurakai.auraframefx.domains.genesis.fusion.InterfaceForgeViewModel
  * Collaborative environment for Aura (Design) and Claude (Architecture)
  * to generate application structures and code modules.
  */
+/**
+ * Compose screen that provides a three-step UI to configure and run an Interface Forge process.
+ *
+ * The UI guides the user through selecting a target architecture, defining the feature/module purpose,
+ * and executing the forge process while displaying progress, errors, and success feedback. On successful
+ * completion the screen resets forge state and triggers navigation back via [onNavigateBack].
+ *
+ * @param viewModel ViewModel that exposes forge state and actions; defaults to a Hilt-provided InterfaceForgeViewModel.
+ * @param onNavigateBack Callback invoked to navigate back from this screen (called after a successful forge and when the back button is pressed).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBuilderScreen(
@@ -300,4 +310,3 @@ fun ForgeExecution(
         }
     }
 }
-

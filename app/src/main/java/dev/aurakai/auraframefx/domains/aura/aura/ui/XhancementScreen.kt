@@ -55,6 +55,18 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.XhancementViewModel
  *
  * @param onNavigateBack Callback invoked to navigate back from this screen. Defaults to a no-op.
  */
+/**
+ * Renders the Xhancement Control Panel UI for viewing and managing hook modules and Kai Security.
+ *
+ * Displays a header, a Kai Security toggle card, a list of hook modules with per-module toggles,
+ * and an "Apply Changes" button. Shows transient error and success snackbars and automatically
+ * clears those messages after a short delay.
+ *
+ * @param onNavigateBack Callback invoked to navigate back; no-op by default.
+ * @param viewModel ViewModel that supplies UI state and handles actions (module toggles, Kai Security toggle,
+ *                  apply changes, and clearing transient messages). A default Hilt-provided ViewModel is used
+ *                  when not supplied.
+ */
 @Composable
 fun XhancementScreen(
     onNavigateBack: () -> Unit = {},
@@ -320,4 +332,3 @@ private fun HookModuleCard(
         }
     }
 }
-

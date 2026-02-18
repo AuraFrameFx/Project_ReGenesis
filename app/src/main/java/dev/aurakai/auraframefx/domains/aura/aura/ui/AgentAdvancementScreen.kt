@@ -73,6 +73,13 @@ enum class NodeType {
     CORE, FUSION, ENHANCEMENT, ULTIMATE
 }
 
+/**
+ * Displays the agent advancement screen including an animated neural background, dynamic agent portrait,
+ * stats panel, and interactive skill-tree visualization with node details.
+ *
+ * @param agentName Initial agent to select and display.
+ * @param onBack Callback invoked when the user requests to navigate back.
+ */
 @Composable
 fun AgentAdvancementScreen(
     agentName: String = "Genesis",

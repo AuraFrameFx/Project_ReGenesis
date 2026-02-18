@@ -45,6 +45,17 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 📊 AGENT MONITORING (The All-Seeing Eye)
  * Unified performance metrics and behavioral logs for all agents.
  */
+/**
+ * Composes the Agent Monitoring screen showing system overview, agent vitality cards, and a feedback stream.
+ *
+ * The screen renders a system pulse header, a list of agent vitality cards (sourced from AgentRepository.getAllAgents()),
+ * and a static activity log feed. By default the `viewModel` is obtained via Hilt from the current LocalViewModelStoreOwner;
+ * that default requires a non-null LocalViewModelStoreOwner at composition time.
+ *
+ * @param onNavigateBack Callback invoked to navigate away from this screen.
+ * @param viewModel MonitoringViewModel used to drive the screen state; by default it is provided via Hilt from the
+ * current LocalViewModelStoreOwner.
+ */
 @Composable
 fun AgentMonitoringScreen(
     onNavigateBack: () -> Unit,
@@ -209,4 +220,3 @@ private fun MonitorLogItem(log: MonitorLog) {
 }
 
 private data class MonitorLog(val agent: String, val message: String, val timestamp: String, val color: Color)
-

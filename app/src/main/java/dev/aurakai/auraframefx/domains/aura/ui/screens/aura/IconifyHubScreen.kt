@@ -83,6 +83,13 @@ data class IconifyCategory(
 // ═══════════════════════════════════════════════════════════════════════════
 
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Hosts the Iconify hub UI with a top bar, bottom navigation, and three content tabs: Home, Tweaks, and Xposed.
+ *
+ * @param viewModel ViewModel that provides the screen's UI state and actions (e.g., available icons and selection).
+ * @param onNavigateBack Callback invoked when the user requests navigation back.
+ * @param onNavigateToCategory Callback invoked with a category id when the user selects a category to navigate into.
+ */
 @Composable
 fun IconifyHubScreen(
     viewModel: IconPickerViewModel = hiltViewModel(
@@ -824,4 +831,3 @@ private val xposedCategories = listOf(
     IconifyCategory("header_clock", "Header Clock", "Add custom clock on QS panel", Icons.Default.Schedule, 12, IconifyColors.Warning, requiresXposed = true),
     IconifyCategory("lockscreen_clock", "Lockscreen Clock", "Add custom clock on lockscreen", Icons.Default.Lock, 15, IconifyColors.Warning, requiresXposed = true)
 )
-

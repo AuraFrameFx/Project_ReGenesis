@@ -40,6 +40,17 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
  * Part of the Nexus domain. Allows the user to synthesize new AI agents
  * for specialized tasks within the ReGenesis collective.
  */
+/**
+ * Renders the agent synthesis screen where a user names an agent, selects its domain, reviews permissions,
+ * and initiates creation.
+ *
+ * The UI reflects ViewModel state (agent name, selected domain, creation status and progress),
+ * shows a domain-colored avatar preview and capability checklist, and displays either a progress
+ * indicator while synthesis is running or a domain-colored action button to start synthesis.
+ *
+ * @param onNavigateBack Callback invoked when the back icon is pressed or after successful synthesis.
+ * @param viewModel The view model that provides and updates screen state; supplied by Hilt by default.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentCreationScreen(
@@ -224,6 +235,15 @@ fun AgentCreationScreen(
     }
 }
 
+/**
+ * Displays a tappable capsule representing an AgentType domain and indicating selection.
+ *
+ * The chip shows the domain name, uses the domain color when selected, and invokes the provided callback when tapped.
+ *
+ * @param domain The AgentType shown on the chip.
+ * @param isSelected Whether the chip is currently selected (affects styling).
+ * @param onClick Callback executed when the chip is tapped.
+ */
 @Composable
 fun DomainChip(
     domain: AgentType,
@@ -278,4 +298,3 @@ fun domainColor(domain: AgentType): Color {
         else -> Color.White
     }
 }
-

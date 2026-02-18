@@ -20,6 +20,13 @@ import dev.aurakai.auraframefx.domains.aura.aura.ui.OracleDriveUiState
 import dev.aurakai.auraframefx.domains.aura.aura.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
+/**
+ * Displays the "Oracle Drive" screen: a scaffolded UI with a top app bar, menu items for
+ * Neural Archive and Module Storage, and an optional card showing the current consciousness state.
+ *
+ * @param navController Controller used to navigate between destinations from this screen.
+ * @param viewModel ViewModel that supplies the screen's UI state and actions.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OracleDriveScreen(

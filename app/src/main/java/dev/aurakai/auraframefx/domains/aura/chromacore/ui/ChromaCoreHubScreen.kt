@@ -31,6 +31,15 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreConfig
  * 🎨 CHROMA CORE HUB SCREEN (Level 2)
  * The main interface for the Unified UXUI Engine.
  */
+/**
+ * Hub screen composable that displays the ChromaCore Engine status, a grid of tweak domains, and an active engine indicator.
+ *
+ * The UI is driven by the provided viewModel's settings state and exposes navigation callbacks when the user navigates back or selects a category.
+ *
+ * @param onNavigateBack Callback invoked when the back/navigation button is pressed.
+ * @param onNavigateToCategory Callback invoked with a category `id` when a category card is selected.
+ * @param viewModel Optional ViewModel supplying settings for the screen; a default instance is provided via Hilt when not supplied.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChromaCoreHubScreen(

@@ -34,6 +34,20 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🔄 SOVEREIGN RECOVERY HUB
  * Advanced recovery tools: OrangeFox/TWRP integration with LDO persistence.
  */
+/**
+ * Renders the Sovereign Recovery hub UI with a header, partition health list, and backup/reboot actions.
+ *
+ * The composable collects UI state from the provided ViewModel to display recovery type, status,
+ * encryption state, and partition information, and wires the BACKUP and REBOOT buttons to the
+ * ViewModel's corresponding actions.
+ *
+ * @param onNavigateBack Callback invoked when the top-left back button is pressed.
+ * @param viewModel Supplies UI state and recovery actions; by default it is obtained via Hilt.
+ *        The default acquisition requires a non-null LocalViewModelStoreOwner.
+ *
+ * @throws IllegalStateException If the default ViewModel initialization is used and no
+ *         LocalViewModelStoreOwner is provided.
+ */
 @Composable
 fun SovereignRecoveryScreen(
     onNavigateBack: () -> Unit,
@@ -161,5 +175,4 @@ private fun PartitionItem(partition: dev.aurakai.auraframefx.domains.kai.viewmod
         }
     }
 }
-
 

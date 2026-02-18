@@ -279,7 +279,17 @@ enum class FlashStage {
 
 // ============================================================================
 // UI COMPOSABLE
-// ============================================================================
+/**
+ * Renders the ROM Flasher screen and binds UI controls to the provided ViewModel.
+ *
+ * The composable displays system capabilities, available ROMs, a pre-flash checklist,
+ * progress indicators, and error/success feedback while coordinating actions (backup,
+ * retention setup, download, and flashing) through the ViewModel.
+ *
+ * @param viewModel The ViewModel that provides UI state and handles user actions.
+ *                  By default this is obtained from Hilt using the current
+ *                  LocalViewModelStoreOwner; a missing ViewModelStoreOwner will
+ *                  produce an error at composition time.
 
 @Composable
 fun ROMFlasherScreen(
@@ -708,5 +718,4 @@ fun FlashProgressIndicator(stage: FlashStage, progress: Float) {
         )
     }
 }
-
 

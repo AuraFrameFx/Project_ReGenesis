@@ -53,6 +53,15 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
  *
  * ✨ Now powered by AgentViewModel for real task execution!
  */
+/**
+ * Displays the task assignment screen for creating new tasks and viewing active tasks for AI agents.
+ *
+ * The UI provides agent selection, task description, priority and deadline controls, and an "Assign Task"
+ * action that creates tasks for the selected agent. Active tasks are shown below the form with status
+ * and priority indicators.
+ *
+ * @param onNavigateBack Callback invoked when the UI should navigate back. Defaults to a no-op.
+ */
 @Composable
 fun TaskAssignmentScreen(
     onNavigateBack: () -> Unit = {},
@@ -428,4 +437,3 @@ data class Task(
     val status: String,
     val priorityColor: Color
 )
-

@@ -36,6 +36,14 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Color as ThemeColor
  * Instant Color Picker - Iconify-style instant theme switching
  * Tap a color chip -> instant app-wide color change (Android 12+ compatible)
  */
+/**
+ * Composable screen that displays a 3-column instant color picker and applies the selected theme color immediately.
+ *
+ * Shows a grid of preset color chips, highlights the current selection, and updates the app theme as soon as a chip is tapped.
+ * The UI includes a top app bar with back navigation, an info card describing instant theme switching, and a text label showing the current selection.
+ *
+ * @param onNavigateBack Callback invoked when back navigation is requested.
+ * @param themeViewModel The ThemeViewModel used to read and set the current theme color. Defaults to a Hilt-provided ViewModel obtained from the current ViewModelStoreOwner; if no ViewModelStoreOwner is available, a descriptive exception is thrown.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstantColorPickerScreen(
@@ -220,5 +228,4 @@ private fun animateDpAsState(
         animationSpec = animationSpec
     )
 }
-
 

@@ -34,6 +34,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 📦 SOVEREIGN MODULE MANAGER
  * Unified control for Magisk, LSPosed, and KernelSU modules.
  */
+/**
+ * Displays the module manager UI where the user can view module statistics and a list of modules with toggles.
+ *
+ * Observes module state from the supplied ViewModel and renders an ACTIVE count, TOTAL count, and a scrollable list of module entries.
+ * Toggling an entry triggers the ViewModel's toggleModule with the module's id.
+ *
+ * @param onNavigateBack Callback provided for parent navigation handling when the screen should navigate back.
+ * @param viewModel The ViewModel that supplies module state and actions. By default, retrieved via Hilt using the current
+ * LocalViewModelStoreOwner (throws if no owner is available).
+ */
 @Composable
 fun SovereignModuleManagerScreen(
     onNavigateBack: () -> Unit,
@@ -147,5 +157,4 @@ private fun ModuleItem(module: SovereignModule, onToggle: () -> Unit) {
         }
     }
 }
-
 

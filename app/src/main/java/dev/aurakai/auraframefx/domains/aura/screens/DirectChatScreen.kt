@@ -54,6 +54,11 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
  *
  * ✨ Now powered by AgentViewModel for real agent intelligence!
  */
+/**
+ * Presents a direct one-on-one chat interface that lets the user select an AI agent, view the agent's message thread, and send messages handled by AgentViewModel.
+ *
+ * @param navController Navigation controller used to navigate from this screen.
+ * @param viewModel AgentViewModel used to observe chat messages, activate agents, and send messages. By default it is created via Hilt using the current LocalViewModelStoreOwner (requires a non-null ViewModelStoreOwner).
 @Composable
 fun DirectChatScreen(
     navController: NavController,
@@ -366,4 +371,3 @@ private fun MessageBubble(message: dev.aurakai.auraframefx.domains.cascade.model
         }
     }
 }
-

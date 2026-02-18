@@ -36,6 +36,19 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
  * Provides real-time visual telemetery for system performance,
  * network integrity, and neural load metrics.
  */
+/**
+ * Displays the real-time monitoring dashboard for system performance, network integrity, and neural load.
+ *
+ * The screen observes CPU, RAM, latency, and integrity metrics from the provided ViewModel and renders an integrity pulse
+ * card plus a grid of gauge cards (CPU LOAD, RAM USAGE, LATENCY, THREATS). It provides a top app bar with a back action.
+ *
+ * The default `viewModel` is obtained via Hilt using the current LocalViewModelStoreOwner; a missing owner will cause an
+ * immediate exception.
+ *
+ * @param onNavigateBack Callback invoked when the user requests navigation back (e.g., tapping the back icon).
+ * @param viewModel The MonitoringViewModel supplying metric state; by default it is created via `hiltViewModel`
+ *   with the current LocalViewModelStoreOwner.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MonitoringHUDsScreen(
@@ -141,6 +154,15 @@ fun IntegrityPulseCard(integrity: Float) {
     }
 }
 
+/**
+ * Displays a square gauge card with an icon, a label, a prominent value and a horizontal progress bar.
+ *
+ * @param title Label displayed above the value.
+ * @param value Formatted metric string shown prominently (e.g., "42%", "3.2 GB").
+ * @param progress Fill fraction of the progress bar, expected in the range 0f..1f.
+ * @param icon Icon shown at the top of the card.
+ * @param accentColor Color applied to the icon, card border and progress fill.
+ */
 @Composable
 fun HudGaugeCard(title: String, value: String, progress: Float, icon: ImageVector, accentColor: Color) {
     Card(
@@ -163,4 +185,3 @@ fun HudGaugeCard(title: String, value: String, progress: Float, icon: ImageVecto
         }
     }
 }
-

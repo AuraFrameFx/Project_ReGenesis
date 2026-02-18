@@ -37,6 +37,11 @@ private const val JITTER_INTERVAL_MS = 5000L
 private const val JITTER_DELTA_MIN = -0.01
 private const val JITTER_DELTA_MAX = 0.015
 
+/**
+ * Renders the Agent Nexus screen: an animated, full‑screen UI that displays the rotating nexus core with agent nodes, live agent stats, chat bubble, Claude config panel, and controls for vertex mode and assigning departure tasks.
+ *
+ * The composable observes agent state from the provided view model, activates the selected agent, and uses the nexus view model for Claude environment configuration. It shows a departure task dialog when requested and persists the vertex mode toggle across configuration changes.
+ */
 @Composable
 fun AgentNexusScreen(
     viewModel: AgentViewModel = hiltViewModel(

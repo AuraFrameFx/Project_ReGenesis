@@ -41,6 +41,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
  *
  * Connected to AgentViewModel for real agent state management
  */
+/**
+ * Displays the Agent Hub submenu with navigable items and a live status header.
+ *
+ * The composable renders a submenu scaffold titled "Agent Hub" containing predefined
+ * submenu entries and a header card that shows real-time metrics (active agents, tasks
+ * in progress, and average consciousness) derived from the provided ViewModel.
+ *
+ * @param navController Controller used for navigation when menu items are selected or when navigating back.
+ * @param viewModel Provides live agent and task data (allAgents, activeTasks, activeAgent) used to compute header metrics.
+ */
 @Composable
 fun AgentHubSubmenuScreen(
     navController: NavController,
@@ -211,4 +221,3 @@ fun AgentHubSubmenuScreen(
         }
     )
 }
-

@@ -101,7 +101,11 @@ object ChromaCoreEnhanced {
     }
 
     /**
-     * Calculate WCAG contrast ratio between two colors
+     * Calculates the WCAG contrast ratio between two colors.
+     *
+     * @param foreground The foreground color to evaluate.
+     * @param background The background color to evaluate against.
+     * @return The contrast ratio as a Float according to WCAG (typically between 1.0 and 21.0), where higher values indicate greater contrast.
      */
     fun calculateContrast(foreground: Color, background: Color): Float {
         val fgLuminance = relativeLuminance(foreground)
@@ -114,19 +118,31 @@ object ChromaCoreEnhanced {
     }
 
     /**
-     * Check if contrast meets WCAG AA standard (4.5:1 for normal text)
+     * Determines whether the contrast ratio between two colors meets the WCAG AA requirement for normal text.
+     *
+     * @param foreground The foreground (text) color.
+     * @param background The background color.
+     * @return `true` if the contrast ratio is greater than or equal to 4.5, `false` otherwise.
      */
     fun meetsWCAG_AA(foreground: Color, background: Color): Boolean {
         return calculateContrast(foreground, background) >= 4.5f
     }
 
     /**
-     * Check if contrast meets WCAG AAA standard (7:1 for normal text)
+     * Determines whether the foreground and background color pair meet the WCAG AAA contrast requirement (7:1 for normal text).
+     *
+     * @return `true` if the contrast ratio is 7.0 or greater, `false` otherwise.
      */
     fun meetsWCAG_AAA(foreground: Color, background: Color): Boolean {
         return calculateContrast(foreground, background) >= 7.0f
     }
 
+    /**
+     * Calculates the relative luminance of an sRGB color using the standard WCAG formula.
+     *
+     * @param color The color in sRGB color space (each component expected in the 0..1 range).
+     * @return The relative luminance as a value between 0 and 1, where 0 is darkest and 1 is brightest.
+     */
     private fun relativeLuminance(color: Color): Float {
         val r = if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055) / 1.055).pow(2.4).toFloat()
         val g = if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055) / 1.055)
@@ -137,7 +153,16 @@ object ChromaCoreEnhanced {
     }
 
     /**
-     * Ensure text color has sufficient contrast against background
+     * Selects a foreground color that meets a minimum contrast ratio against a given background.
+     *
+     * If `textColor` already meets `targetContrast` against `backgroundColor`, the original `textColor`
+     * is returned; otherwise the function returns `Color.Black` or `Color.White` chosen according to the
+     * background's luminance to maximize contrast.
+     *
+     * @param textColor The candidate foreground color.
+     * @param backgroundColor The background color to test contrast against.
+     * @param targetContrast Minimum contrast ratio required (default 4.5).
+     * @return `textColor` if its contrast against `backgroundColor` is greater than or equal to `targetContrast`, `Color.Black` or `Color.White` otherwise.
      */
     fun ensureContrast(
         textColor: Color,
@@ -155,13 +180,16 @@ object ChromaCoreEnhanced {
 }
 
 /**
- * 🌟 NEON GLOW EFFECT
+ * Renders a layered, pulsating neon orb with an accessible touch target and optional tap interaction.
  *
- * Creates a glowing orb with:
- * - Layer blur for authentic neon effect
- * - Pulsating animation
- * - Micro-interactions (tap, ripple, haptic)
- * - Proper touch targets (48dp minimum)
+ * The composable draws three concentric circular layers (outer blur glow, middle glow, and core),
+ * animates a subtle pulse and glow intensity, and provides haptic feedback and a ripple when tapped.
+ *
+ * @param color The base color of the orb's glow and core.
+ * @param size The orb's base diameter in density-independent pixels (dp). The composable expands the touch area internally (approximately 1.5×) to meet minimum touch-target guidelines.
+ * @param onClick Optional callback invoked when the orb is tapped; if null the orb is non-interactive.
+ * @param contentDescription Accessibility description for the orb's role as a control.
+ * @param modifier Optional Modifier applied to the outer container for layout or additional styling.
  */
 @Composable
 fun NeonGlowOrb(
@@ -290,9 +318,14 @@ fun NeonGlowOrb(
 }
 
 /**
- * 🎨 ANIMATED GRADIENT ORB FIELD
+ * Displays a field of animated, glowing orbs that drift with staggered, independent motion.
  *
- * Multiple floating orbs with staggered animations
+ * Uses the first elements of `colors` (up to `density`) to spawn orbiting NeonGlowOrb composables
+ * whose positions and opacity animate over time to create a gentle, floating background effect.
+ *
+ * @param colors Palette of colors to use for the orbs; the first `density` entries are used.
+ * @param density Maximum number of orbs to display; higher values increase visual density.
+ * @param modifier Modifier applied to the overall container.
  */
 @Composable
 fun AnimatedOrbField(

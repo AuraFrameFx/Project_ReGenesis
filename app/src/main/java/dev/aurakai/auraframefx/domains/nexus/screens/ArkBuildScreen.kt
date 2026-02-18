@@ -41,6 +41,16 @@ import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.nexus.models.core.ArkStatus
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.ArkBuildViewModel
 
+/**
+ * Displays the Ark build UI: header, project progress HUD, components list, and action controls.
+ *
+ * The UI is driven by the provided ArkBuildViewModel's `arkProject` state and updates reactively.
+ *
+ * @param onNavigateBack Callback invoked to navigate back; defaults to a no-op.
+ * @param viewModel ArkBuildViewModel that supplies project state and exposes build actions.
+ *                  By default it is obtained from Hilt using the current LocalViewModelStoreOwner
+ *                  (a non-null LocalViewModelStoreOwner is required).
+ */
 @Composable
 fun ArkBuildScreen(
     onNavigateBack: () -> Unit = {},
@@ -220,4 +230,3 @@ fun ArkComponentCard(component: dev.aurakai.auraframefx.domains.nexus.models.cor
         }
     }
 }
-

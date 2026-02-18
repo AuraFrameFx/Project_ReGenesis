@@ -77,6 +77,19 @@ import java.util.Locale
  * Module 17: "Secure, long-term storage for cognitive data and memories"
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Screen for browsing, filtering, and managing memories from the NexusMemory archive.
+ *
+ * Displays a header with navigation and filter actions, a memory statistics bar, a search field,
+ * filter chips (type, LDO, last 24 hours, minimum importance), a list of memory cards (or an empty
+ * state), and a detail dialog for the selected memory. User interactions are forwarded to the
+ * provided view model.
+ *
+ * @param navController Controls navigation actions (e.g., back navigation).
+ * @param viewModel The view model that supplies state and handles actions. By default this is
+ * obtained via `hiltViewModel` using the current `LocalViewModelStoreOwner`; a non-null
+ * `ViewModelStoreOwner` must be present or a descriptive exception will be thrown.
+ */
 @Composable
 fun NeuralArchiveScreen(
     navController: NavController,
@@ -639,4 +652,3 @@ private fun formatTimestamp(timestamp: Long): String {
 private fun formatFullTimestamp(timestamp: Long): String {
     return SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault()).format(Date(timestamp))
 }
-

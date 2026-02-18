@@ -44,6 +44,13 @@ class CascadeDebugViewModel @Inject constructor(
  * Provides interactive controls to view and modify the current vision and processing states, as well as to review their respective histories. Intended for use in development or debugging environments to facilitate real-time state inspection and manipulation.
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * UI for inspecting and mutating the cascade's vision and processing states.
+ *
+ * Displays the current VisionState and ProcessingState from the provided ViewModel, allows entering new states and sending updates, and shows a placeholder area for state history.
+ *
+ * @param viewModel The CascadeDebugViewModel used to observe state flows and apply updates. By default this is obtained via `hiltViewModel` scoped to `LocalViewModelStoreOwner.current`; a non-null ViewModelStoreOwner must be provided in the composition when using the default. 
+ */
 @Composable
 fun CascadeZOrderPlayground(
     viewModel: CascadeDebugViewModel = hiltViewModel(
@@ -214,4 +221,3 @@ fun CascadeZOrderPlaygroundPreview() {
         CascadeZOrderPlayground()
     }
 }
-

@@ -32,6 +32,12 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * 🔮 SOVEREIGN NEURAL ARCHIVE (The Memory Core)
  * Deep, local-first vector memory management. No cloud context allowed.
  */
+/**
+ * Displays the Sovereign Neural Archive screen showing memory statistics, a list of local memory shards, and primary actions (optimize and purge).
+ *
+ * @param onNavigateBack Callback invoked when the user requests to navigate back from this screen.
+ * @param viewModel Provides UI state and actions for the screen; by default it is obtained via Hilt using the current LocalViewModelStoreOwner and requires a non-null ViewModelStoreOwner.
+ */
 @Composable
 fun SovereignNeuralArchiveScreen(
     onNavigateBack: () -> Unit,
@@ -170,4 +176,3 @@ private fun MemoryShardItem(shard: dev.aurakai.auraframefx.domains.genesis.viewm
         }
     }
 }
-

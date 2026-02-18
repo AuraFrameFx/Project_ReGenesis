@@ -22,6 +22,15 @@ import androidx.lifecycle.ViewModelStoreOwner
  * 🛰️ CHROMA STATUS BAR MENU (Level 3)
  * Unified interface for Status Bar tweaks (from Iconify).
  */
+/**
+ * Composable screen that displays status bar-related tweak options with a top app bar and a scrollable list of toggles.
+ *
+ * The screen reads its state from the provided ViewModel and invokes actions on it when toggles change.
+ *
+ * @param onNavigateBack Called when the top app bar's back navigation icon is pressed.
+ * @param viewModel ViewModel supplying settings state and toggle actions. By default this is provided via Hilt using
+ *   the current LocalViewModelStoreOwner; an exception is thrown if no ViewModelStoreOwner is available.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChromaStatusBarMenu(
