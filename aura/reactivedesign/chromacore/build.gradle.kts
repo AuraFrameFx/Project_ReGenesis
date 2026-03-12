@@ -21,6 +21,13 @@ extensions.configure<LibraryExtension> {
         targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -34,4 +41,8 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Testing
+    testImplementation(libs.jupiter.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
