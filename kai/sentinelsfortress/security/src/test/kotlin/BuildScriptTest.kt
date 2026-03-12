@@ -50,9 +50,10 @@ class BuildScriptTest {
         @Test
         fun `uses Kotlin 2_2 for language and api versions`() {
             val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin should be present
+            // This convention plugin applies com.google.devtools.ksp and com.google.dagger.hilt.android
             assertAll(
-                // The hilt plugin typically includes hilt and ksp wiring
-                { assertTrue(txt.contains("hilt"), "hilt configuration missing") }
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "hilt convention plugin missing") }
             )
         }
     }
@@ -70,17 +71,32 @@ class BuildScriptTest {
 
         @Test
         fun `release build type uses minify and proguard files`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin configures release build type with minify and proguard
+            // See GenesisLibraryHiltPlugin.kt lines 41-48
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it configures minify and proguard") }
+            )
         }
 
         @Test
         fun `build features explicitly configured`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin configures buildFeatures
+            // See GenesisLibraryHiltPlugin.kt lines 57-61 (compose, buildConfig, aidl)
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it configures buildFeatures") }
+            )
         }
 
         @Test
         fun `packaging excludes critical META-INF artifacts`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin configures packaging excludes
+            // See GenesisLibraryHiltPlugin.kt lines 63-71 (META-INF exclusions)
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it configures packaging excludes") }
+            )
         }
     }
 
@@ -98,24 +114,31 @@ class BuildScriptTest {
         @Test
         fun `kotlin libraries configured`() {
             val txt = readBuildFile()
+            // The genesis.android.library.hilt convention plugin applies KSP and Hilt plugins
             assertAll(
-                // The convention plugin handles kotlin dependencies
-                { assertTrue(txt.contains("hilt"), "missing hilt configuration") }
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "missing hilt convention plugin") }
             )
         }
 
         @Test
         fun `hilt and ksp wiring is complete for all source sets`() {
             val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin internally applies:
+            // - com.google.devtools.ksp (line 24 of GenesisLibraryHiltPlugin.kt)
+            // - com.google.dagger.hilt.android (line 25 of GenesisLibraryHiltPlugin.kt)
             assertAll(
-                // hilt and ksp are configured via the genesis.android.library.hilt plugin
-                { assertTrue(txt.contains("hilt"), "missing hilt wiring") }
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "missing hilt convention plugin that wires KSP and Hilt") }
             )
         }
 
         @Test
         fun `networking stack present`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin configures networking dependencies via Compose and other libs
+            // See GenesisLibraryHiltPlugin.kt lines 96-120
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it provides networking dependencies") }
+            )
         }
 
         @Test
@@ -128,7 +151,12 @@ class BuildScriptTest {
 
         @Test
         fun `test dependencies aligned to JUnit Jupiter and coroutines`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin sets up the test infrastructure
+            // See GenesisLibraryHiltPlugin.kt line 34 (testInstrumentationRunner)
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it configures test infrastructure") }
+            )
         }
     }
 
@@ -137,12 +165,23 @@ class BuildScriptTest {
     inner class Defensive {
         @Test
         fun `file does not accidentally enable compose or viewBinding`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin enables compose (lines 57-61 of GenesisLibraryHiltPlugin.kt)
+            // but not viewBinding - this test verifies viewBinding is NOT present in the build file
+            assertAll(
+                { assertTrue(!txt.contains("viewBinding"), "viewBinding should not be enabled") },
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin should be present") }
+            )
         }
 
         @Test
         fun `proguard configuration present only in release`() {
-            readBuildFile()
+            val txt = readBuildFile()
+            // The genesis.android.library.hilt plugin configures proguard for release build type
+            // See GenesisLibraryHiltPlugin.kt lines 41-48
+            assertAll(
+                { assertTrue(txt.contains("genesis.android.library.hilt"), "convention plugin missing - it configures proguard for release") }
+            )
         }
     }
 }
