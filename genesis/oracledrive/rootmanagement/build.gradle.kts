@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":core-module"))
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 ksp {

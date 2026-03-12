@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
+import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
@@ -9,6 +10,11 @@ import dev.aurakai.auraframefx.romtools.bootloader.BootloaderSafetyManager
 import dev.aurakai.auraframefx.romtools.retention.AurakaiRetentionManager
 import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 import kotlinx.coroutines.flow.Flow
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -74,13 +80,42 @@ class RomToolsManagerImpl @Inject constructor(
         return try {
             Timber.i("Processing ROM operation: ${request.operation}")
 
-            // TODO: Implement actual operation routing based on request.operation type
+            val result: Result<*> = when (request.operation) {
+                RomOperation.FlashRom -> {
+                    val uri = request.uri ?: throw IllegalArgumentException("URI is required for FlashRom")
+                    val file = uriToFile(uri) ?: throw Exception("Failed to resolve ROM file")
+                    flashRom(RomFile(file, file.name))
+                }
+                RomOperation.CreateBackup -> {
+                    val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+                    createNandroidBackup("Backup_$timestamp")
+                }
+                RomOperation.RestoreBackup -> {
+                    val uri = request.uri ?: throw IllegalArgumentException("URI is required for RestoreBackup")
+                    val backups = backupManager.listBackups().getOrThrow()
+                    // Try to find by path or name
+                    val backupInfo = backups.find { it.path == uri.path || it.name == uri.lastPathSegment }
+                        ?: throw Exception("Backup not found for URI: $uri")
+                    restoreNandroidBackup(backupInfo)
+                }
+                RomOperation.GenesisOptimizations -> installGenesisOptimizations()
+                RomOperation.InstallRecovery -> installRecovery()
+                RomOperation.UnlockBootloader -> unlockBootloader()
+            }
 
-            AgentResponse.success(
-                content = "ROM operation processed successfully",
-                agentName = "RomTools",
-                agentType = AgentType.GENESIS
-            )
+            if (result.isSuccess) {
+                AgentResponse.success(
+                    content = "${request.operation.getDisplayName()} processed successfully",
+                    agentName = "RomTools",
+                    agentType = AgentType.GENESIS
+                )
+            } else {
+                AgentResponse.error(
+                    message = result.exceptionOrNull()?.message ?: "Operation failed",
+                    agentName = "RomTools",
+                    agentType = AgentType.GENESIS
+                )
+            }
         } catch (e: Exception) {
             Timber.e(e, "Failed to process ROM operation")
             AgentResponse.error(
@@ -219,6 +254,27 @@ class RomToolsManagerImpl @Inject constructor(
     }
 
     // Helper methods
+
+    private fun uriToFile(uri: Uri): File? {
+        return try {
+            val contentResolver = context.contentResolver
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+
+            // Create a temporary file in cache
+            val fileName = "rom_temp_${System.currentTimeMillis()}.zip"
+            val tempFile = File(context.cacheDir, fileName)
+
+            inputStream.use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            tempFile
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to resolve URI to file: $uri")
+            null
+        }
+    }
 
     private fun checkRootAccess(): Boolean {
         return try {
