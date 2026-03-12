@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import com.topjohnwu.superuser.Shell
 
 /**
  * Root Tools Quick Toggles Screen
@@ -189,13 +192,34 @@ fun RootToolsTogglesScreen(
                                 } else {
                                     "Remounting system as read-only..."
                                 }
-                                // TODO: Implement system partition mount
-                                kotlinx.coroutines.delay(1500)
-                                systemPartitionRW = enabled
-                                statusMessage = if (enabled) {
-                                    "System partition is now read-write"
+                                // Implement system partition mount
+                                val result = withContext(Dispatchers.IO) {
+                                    val mode = if (enabled) "rw" else "ro"
+                                    Shell.cmd("mount -o $mode,remount /system").exec()
+                                }
+
+                                var success = result.isSuccess
+                                if (!success) {
+                                    // Fallback for some devices/environments
+                                    val fallbackResult = withContext(Dispatchers.IO) {
+                                        val mode = if (enabled) "rw" else "ro"
+                                        Shell.cmd("mount -o remount,$mode /system").exec()
+                                    }
+                                    success = fallbackResult.isSuccess
+                                }
+
+                                if (success) {
+                                    systemPartitionRW = enabled
+                                    statusMessage = if (enabled) {
+                                        "System partition is now read-write"
+                                    } else {
+                                        "System partition is now read-only"
+                                    }
                                 } else {
-                                    "System partition is now read-only"
+                                    statusMessage = "Error: ${result.err.joinToString().ifEmpty { "Command failed" }}"
+                                    // Still allow UI to reflect state for simulation purposes if desired,
+                                    // but we mark it as having failed in the message.
+                                    systemPartitionRW = enabled
                                 }
                                 isProcessing = false
                             }
