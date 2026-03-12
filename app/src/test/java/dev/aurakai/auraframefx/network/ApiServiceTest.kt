@@ -425,7 +425,7 @@ class ApiServiceTest {
 
             // Then
             // Currently returns null as placeholder
-            assertNull(result)
+            assertNotNull(result)
         }
 
         @Test
@@ -437,9 +437,9 @@ class ApiServiceTest {
             val result3 = apiService.createService()
 
             // Then
-            assertNull(result1)
-            assertNull(result2)
-            assertNull(result3)
+            assertNotNull(result1)
+            assertNotNull(result2)
+            assertNotNull(result3)
         }
 
         @Test
@@ -474,7 +474,7 @@ class ApiServiceTest {
             val result = apiService.createService()
 
             // Then
-            assertNull(result) // Currently placeholder
+            assertNotNull(result) // Currently placeholder
         }
     }
 
@@ -669,7 +669,7 @@ class ApiServiceTest {
 
             assertEquals("api-token", apiTokenField.get(apiService))
             assertEquals("oauth-token", oauthTokenField.get(apiService))
-            assertNull(service) // Placeholder
+            assertNotNull(service)
         }
 
         @Test
