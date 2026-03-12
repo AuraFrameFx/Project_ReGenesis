@@ -21,5 +21,8 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
