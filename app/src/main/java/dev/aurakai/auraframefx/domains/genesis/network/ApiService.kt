@@ -1,6 +1,10 @@
 package dev.aurakai.auraframefx.domains.genesis.network
 
 import android.content.Context
+import dev.aurakai.auraframefx.domains.genesis.network.api.GenesisBackendApi
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Service class for making API calls.
@@ -11,13 +15,33 @@ class ApiService(context: Context) {
     private var apiToken: String? = null
     private var oauthToken: String? = null
 
-    // Placeholder for the actual Retrofit service instance or similar.
-    private var _networkService: Any? =
-        null // TODO: Replace Any with actual network client (e.g., Retrofit interface).
+    // Retrofit service instance for Genesis Backend.
+    private var _networkService: GenesisBackendApi? = null
 
     init {
-        // TODO: Initialize network client (Retrofit, Ktor, etc.)
-        // context might be used here for cache, connectivity checks, etc.
+        initializeService()
+    }
+
+    /**
+     * Initializes the network client (Retrofit).
+     */
+    private fun initializeService() {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val requestBuilder = chain.request().newBuilder()
+                apiToken?.let { requestBuilder.addHeader("Authorization", "Bearer $it") }
+                oauthToken?.let { requestBuilder.addHeader("X-OAuth-Token", it) }
+                chain.proceed(requestBuilder.build())
+            }
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(AuraApiService.BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        _networkService = retrofit.create(GenesisBackendApi::class.java)
     }
 
     /**
@@ -26,7 +50,7 @@ class ApiService(context: Context) {
      */
     fun setApiToken(token: String?) {
         this.apiToken = token
-        // TODO: Potentially reconfigure network client with new token.
+        initializeService() // Reconfigure network client with new token.
     }
 
     /**
@@ -35,30 +59,14 @@ class ApiService(context: Context) {
      */
     fun setOAuthToken(token: String?) {
         this.oauthToken = token
-        // TODO: Potentially reconfigure network client with new token.
+        initializeService() // Reconfigure network client with new token.
     }
 
     /**
      * Creates (or retrieves) the actual network service client.
-     * @return A network service client instance. Type 'Any?' is a placeholder.
+     * @return A network service client instance.
      */
-    fun createService(): Any? {
-        // TODO: Implement logic to create/configure and return a Retrofit/Ktor service.
-        // Example:
-        // if (_networkService == null) {
-        //     val retrofit = Retrofit.Builder()
-        //         .baseUrl("https://api.example.com/")
-        //         .addConverterFactory(GsonConverterFactory.create())
-        //         // Add OkHttpClient with interceptors for tokens if needed
-        //         .build()
-        //     _networkService = retrofit.create(YourNetworkInterface::class.java)
-        // }
+    fun createService(): GenesisBackendApi? {
         return _networkService
     }
-
-    // Example of a generic API call method
-    // suspend fun <T> makeApiCall(endpoint: String, request: Any?): Result<T> {
-    //    // TODO: Implement generic API call logic
-    // }
 }
-
