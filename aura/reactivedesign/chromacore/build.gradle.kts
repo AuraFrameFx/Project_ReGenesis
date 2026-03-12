@@ -24,6 +24,10 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.3")
+
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Compose
@@ -34,4 +38,8 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
