@@ -23,7 +23,7 @@ class CanvasWebSocketService @Inject constructor(
 ) {
     // Removed TAG property
     private var webSocket: WebSocket? = null
-    private val _events = MutableSharedFlow<CanvasWebSocketEvent>()
+    private val _events = MutableSharedFlow<CanvasWebSocketEvent>(extraBufferCapacity = 16)
     val events: SharedFlow<CanvasWebSocketEvent> = _events.asSharedFlow()
 
     private val webSocketListener = object : WebSocketListener() {
